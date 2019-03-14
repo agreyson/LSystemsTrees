@@ -17,17 +17,11 @@ public class LSystemsTreesApp extends PApplet {
     }
 
     public void settings(){
-        size(600, 600);
+        size(600, 1000);
     }
 
     public void setup() {
-        HashMap<String, String> ruleset = new HashMap<String, String>();
-        ruleset.put("F", "FF+[+F-F-F]-[-F+F+F]");
-        ruleset.put("+", "+");
-        ruleset.put("[", "[");
-        ruleset.put("]", "]");
-        ruleset.put("-", "-");
-        lSystem = new LSystem("F", ruleset);
+        lSystem = get3_2_a();
     }
 
     public void draw() {
@@ -48,5 +42,27 @@ public class LSystemsTreesApp extends PApplet {
 
     public static LSystemsTreesApp getApp(){
         return app;
+    }
+
+    private LSystem get3_2_d(){
+        HashMap<String, String> ruleset = new HashMap<String, String>();
+        ruleset.put("F", "FF+[+F-F-F]-[-F+F+F]");
+        ruleset.put("+", "+");
+        ruleset.put("[", "[");
+        ruleset.put("]", "]");
+        ruleset.put("-", "-");
+        LSystem lSystem = new LSystem("F", ruleset);
+        return lSystem;
+    }
+
+    private LSystem get3_2_a(){
+        HashMap<String, String> ruleset = new HashMap<String, String>();
+        ruleset.put("F", "F[+F]F[−F]F");
+        ruleset.put("+", "+");
+        ruleset.put("[", "[");
+        ruleset.put("]", "]");
+        ruleset.put("-", "-");
+        LSystem lSystem = new LSystem("F", ruleset);
+        return lSystem;
     }
 }
