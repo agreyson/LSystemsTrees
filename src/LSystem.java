@@ -1,32 +1,43 @@
 import java.util.HashMap;
 
 public class LSystem {
-
-    private String generation; // current generation
-    private int numGenerations; // quantity of generations so far
-    private HashMap<String, String> productionRules; // key-value pairs representing replacements
     private Turtle turtle;
+    private String generation;
+    private int numGenerations;
+    private HashMap<String, String> productionRules;
 
-    public LSystem(String axiom, HashMap<String, String> productionRules) {
+    public LSystem(String axiom, HashMap<String, String> productionRules, float startingLength, float theta, int color)
+    {
+        this.turtle = new Turtle(startingLength, theta, color);
         this.generation = axiom;
-        this.productionRules = productionRules;
         this.numGenerations = 0;
-        this.turtle = new Turtle();
+
+        this.productionRules = productionRules;
+        productionRules.put("+", "+");
+        productionRules.put("-", "-");
+        productionRules.put("[", "[");
+        productionRules.put("]", "]");
     }
 
     public void render(){
-        for (int i = 0; i < generation.length(); i++) {
+        LSystemsTreesApp app = LSystemsTreesApp.getApp();
+        for (int i = 0; i < generation.length(); i++){
             turtle.render(generation.charAt(i), numGenerations);
         }
     }
 
-    public void generateNewSentence() {
+    public void generateNewSentence(){
         StringBuffer nextgen = new StringBuffer();
-        for (int i = 0; i < generation.length(); i++) {
-            String replacement = productionRules.get(Character.toString(generation.charAt(i)));
+        for (int i = 0; i < generation.length(); i++){
+            char c = generation.charAt(i);
+            String replacement = productionRules.get(Character.toString(c));
             nextgen.append(replacement);
+            if (replacement == null){
+                System.out.println("Something went wrong " + c);
+            }
         }
         generation = nextgen.toString();
         numGenerations++;
+        System.out.println(generation);
     }
 }
